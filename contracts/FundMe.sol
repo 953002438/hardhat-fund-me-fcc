@@ -42,14 +42,16 @@ contract FundMe {
 
     // if no method matchs, this method will be invoked
     fallback() external payable {
-        fund();
+        console.log("fallback is invoked");
+        // fund();
     }
 
     /**
      * @notice This function funds this contract
      */
     function fund() public payable {
-        // console.log("call fund, msg value is:", msg.value);
+        console.log("msg.value:", msg.value.getConversionRate(s_priceFeed));
+        console.log("price:", msg.value.getConversionRate(s_priceFeed));
         require(
             msg.value.getConversionRate(s_priceFeed) > MINIMUM_USD,
             "You need to spend more Eth!"

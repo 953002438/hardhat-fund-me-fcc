@@ -5,7 +5,7 @@ const networkConfig = {
   },
 };
 
-const developmentChains = ["hardhat", "localhost"];
+const developmentChains = ["hardhat", "localhost", "ganache"];
 const DECIMAL = 8;
 const INITIAL_ANSWER = 100000000000;
 

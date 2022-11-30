@@ -10,6 +10,7 @@ const { developmentChains } = require("../../helper-hardhat-config");
       beforeEach(async function () {
         deployer = (await getNamedAccounts()).deployer;
 
+        const accounts = await ethers.getSigners();
         await deployments.fixture(["all"]);
 
         fundMe = await ethers.getContract("FundMe", deployer);
@@ -91,7 +92,8 @@ const { developmentChains } = require("../../helper-hardhat-config");
           );
           const tranctionResponse = await fundMe.withdraw();
           const tranctionReceipt = await tranctionResponse.wait(1);
-          const { gasUsed, effectiveGasPrice } = tranctionReceipt;
+          let { gasUsed, effectiveGasPrice } = tranctionReceipt;
+          effectiveGasPrice = effectiveGasPrice || tranctionResponse.gasPrice;
           const gasCost = gasUsed.mul(effectiveGasPrice);
 
           const endingFundMeBalance = await fundMe.provider.getBalance(
@@ -156,7 +158,8 @@ const { developmentChains } = require("../../helper-hardhat-config");
           );
           const tranctionResponse = await fundMe.cheaperWithdraw();
           const tranctionReceipt = await tranctionResponse.wait(1);
-          const { gasUsed, effectiveGasPrice } = tranctionReceipt;
+          let { gasUsed, effectiveGasPrice } = tranctionReceipt;
+          effectiveGasPrice = effectiveGasPrice || tranctionResponse.gasPrice;
           const gasCost = gasUsed.mul(effectiveGasPrice);
 
           const endingFundMeBalance = await fundMe.provider.getBalance(
