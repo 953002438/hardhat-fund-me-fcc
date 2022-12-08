@@ -4,10 +4,10 @@ const { developmentChains } = require("../../helper-hardhat-config");
 
 !developmentChains.includes(network.name)
   ? describe.skip
-  : describe("FundMe", function () {
+  : describe("FundMe", function() {
       let fundMe, deployer, mockV3Aggregator;
       const sendValue = ethers.utils.parseEther("1");
-      beforeEach(async function () {
+      beforeEach(async function() {
         deployer = (await getNamedAccounts()).deployer;
 
         const accounts = await ethers.getSigners();
@@ -20,14 +20,14 @@ const { developmentChains } = require("../../helper-hardhat-config");
         );
       });
 
-      describe("constructor", function () {
+      describe("constructor", function() {
         it("sets the aggregator address correctly", async () => {
           const priceFeed = await fundMe.getPriceFeed();
           assert.equal(priceFeed, mockV3Aggregator.address);
         });
       });
 
-      describe("fund", function () {
+      describe("fund", function() {
         it("Failes if you dont spend enough Eth", async () => {
           await expect(fundMe.fund()).to.be.revertedWith(
             "You need to spend more Eth!"
